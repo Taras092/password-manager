@@ -1,0 +1,72 @@
+.content {
+  width: 30%;
+  margin-left: 10px;
+  margin-top: 15px;
+
+  &__password {
+    display: flex;
+    height: 32px;
+  }
+
+  &__password_search {
+    flex: 1;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border: 3px solid rgb(1, 124, 196);
+    border-left: none;
+    padding: 8px;
+    font-size: 18px;
+    outline: none;
+    background: none;
+  }
+
+  &__password_count {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border: 3px solid rgb(1, 124, 196);
+    border-right: none;
+    width: 40px;
+    line-height: 28px;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 700;
+    background: rgb(1, 124, 196);
+    color: black;
+  }
+
+  &__password_btn {
+    width: 60px;
+    margin-left: 15px;
+    border: 3px solid rgb(1, 124, 196);
+    border-radius: 8px;
+    font-weight: 700;
+    background: none;
+
+    &:hover {
+      background: linear-gradient(70deg, rgb(6, 103, 160), rgb(247, 247, 182));
+      color: white;
+      cursor: pointer;
+    }
+  }
+
+  &__list {
+    text-decoration: none;
+    list-style: none;
+    padding: 0px;
+  }
+
+  &__list-item {
+    display: flex;
+  }
+
+  &__list-item_img {
+    width: 40px;
+    border-radius: 50%;
+  }
+
+  &__list-item_description {
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+}
