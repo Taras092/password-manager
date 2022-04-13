@@ -1,47 +1,35 @@
-import React, { useState, Component } from 'react';
-import Header from './components/header/Header.jsx';
-import Calendar from './components/calendar/Calendar.jsx';
-
-import { getWeekStartDate, generateWeekRange, setDay } from '../src/utils/dateUtils.js';
-
+import React from 'react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
+import CreateAccount from './components/LoginPage/CreateAccount';
+import Login from './components/LoginPage/Login';
+import HomePage from './components/Home/HomePage';
+import { createUser, fetchUsersData } from './gateway/requests';
 import './common.scss';
 
 const App = () => {
-  const [weekStartDate, setWeekStartDate] = useState(new Date());
-  const [visible, setVisible] = useState(false);
+const navigate = useNavigate();
 
-  const handleCreateEvent = () => {
-    setVisible(true);
+  const fetchUser = (email, password) => {
+    fetchUsersData()
+      .then(usersData => usersData.find(user => user.email === email && user.password === password))
+      .then(userData => navigate(`/home/${userData.id}`));
+  }
+
+  const handleSubmit = event => {
+    createUser(event).then(userData => navigate(`/home/${userData.id}`));
   };
 
-  const handleTodayDate = () => {
-    setWeekStartDate(new Date());
+  const handleLogin = event => {
+    const { email, password } = event;
+    fetchUser(email, password)
   };
 
-  const handleLeft = () => {
-    setWeekStartDate(new Date(setDay(weekStartDate, false)));
-  };
-
-  const handleRight = () => {
-    setWeekStartDate(new Date(setDay(weekStartDate, true)));
-  };
-
-  const handleCloseModalEvent = () => {
-    setVisible(false);
-  };
-
-  const weekDates = generateWeekRange(getWeekStartDate(weekStartDate));
   return (
-    <>
-      <Header
-        onCreateEvent={handleCreateEvent}
-        onTodayDate={handleTodayDate}
-        onPrevMonth={handleLeft}
-        onNextMonth={handleRight}
-        date={weekStartDate}
-      />
-      <Calendar weekDates={weekDates} visible={visible} onClose={handleCloseModalEvent} />
-    </>
+    <Routes>
+      <Route index element={<Login onSubmit={handleLogin} />} />
+      <Route path="createAccount" element={<CreateAccount onSubmit={handleSubmit} />} />
+      <Route path="home/:userId" element={<HomePage />} />
+    </Routes>
   );
 };
 
