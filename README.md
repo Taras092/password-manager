@@ -1,6 +1,6 @@
 # **Password manager**
 
-[Site link]()
+[Site link](https://taras092.github.io/password-manager/)
 
 ###### Layout supports desktop (up-to-1400) versions
 
