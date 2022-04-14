@@ -1,6 +1,6 @@
 # **Password manager**
 
-[Site link](https://taras092.github.io/password-manager/)
+[Site link](https://dreamy-clafoutis-a9eda5.netlify.app)
 
 ###### Layout supports desktop (up-to-1400) versions
 
