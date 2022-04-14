@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Contentlist from './ContentList';
+import { fetchCredentialsData } from '../../gateway/requests';
 import './content.scss';
 
 const Content = ({ onCreate, userLists }) => {
@@ -12,7 +13,7 @@ const Content = ({ onCreate, userLists }) => {
           Create
         </button>
       </div>
-      {/* <Contentlist userLists={userLists}/> */}
+      <Contentlist userLists={userLists} />
     </div>
   );
 };
