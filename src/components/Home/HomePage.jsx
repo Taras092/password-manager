@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { findUser, updateUser } from '../../gateway/requests';
+import { findUser, createCredential, fetchCredentialsData } from '../../gateway/requests';
 import Categories from './Categories';
 import Modal from '../Modal/Modal';
 
@@ -12,6 +12,7 @@ const HomePage = () => {
 
   const [user, setUser] = useState([]);
   const [visible, setVisible] = useState(false);
+  const [userLists, setUserLists] = useState([]);
 
   const handleCreateEvent = () => {
     setVisible(true);
@@ -21,8 +22,12 @@ const HomePage = () => {
     setVisible(false);
   };
 
-
   useEffect(() => fetchUserInfo(userId), [userId]);
+  useEffect(() => fetchTasks(userId), [userId]);
+
+  const fetchTasks = id => {
+    fetchCredentialsData(id).then(userList => setUserLists(userList));
+  };
 
   const fetchUserInfo = userId => {
     findUser(userId).then(userData => setUser(userData));
@@ -30,15 +35,12 @@ const HomePage = () => {
 
   const handleUserPasswordList = event => {
     setVisible(false);
-    const newUser = {
-      listPassword: [event],
-    }
-    updateUser(userId, newUser).then((userData) => console.log(userData))
-  }
+    createCredential(userId, event).then(() => fetchTasks(userId));
+  };
 
   return (
     <section className="home">
-      {visible && <Modal onClose={handleCloseModalEvent} onSubmit={handleUserPasswordList}/>}
+      {visible && <Modal onClose={handleCloseModalEvent} onSubmit={handleUserPasswordList} />}
       <div className="navigation">
         <div className="navigation__contact">
           <img
@@ -50,7 +52,7 @@ const HomePage = () => {
         </div>
         <Categories />
       </div>
-      <Content onCreate={handleCreateEvent}/>
+      <Content onCreate={handleCreateEvent} userLists={userLists} />
       <div className="details"></div>
     </section>
   );
